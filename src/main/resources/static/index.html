@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="page-container">
+<aside class = "side-panel">
+    <h2>Comments</h2>
+    <div id="comment-container">
+        <div class="comment-item">
+            <p>test user:<br>
+            test message</p>
+        </div>
+    </div>
+</aside>
+    <div class="main-content">
+<header><h1>Welcome to <s style="text-decoration-color: crimson; font-size: 2rem">Pron</s>Gamehub!</h1></header>
+<hr>
+    <div class="wanted-box">
+        <h2>Honorable mention</h2>
+        <div class="photo-grid">
+        <img src="https://media.discordapp.net/attachments/1120107041579606058/1558744575047110697/eGzBpE9rZ8qmub7z.gif?ex=6acc8d82&is=6acb3c02&hm=78f0ad121caf4b78a573e126383b46bd592b96b87e9adb5b722fcbc8f6f014b6&=" alt="Folk cat">
+            <img src="https://media.discordapp.net/attachments/1120107041579606058/1558749498136723486/5h3c8gp95hFVcPL.gif?ex=6acc9218&is=6acb4098&hm=ec885d7a3fc32b8e43804fda97de4428ab5a1a1680259dd2bb27626e7f46ac8a&=" alt="Folk cat">
+            <img src="https://media.discordapp.net/attachments/801740437585002566/1553482295120502925/ezgif-30c0b083148e17f5_1.gif?ex=6acc8661&is=6acb34e1&hm=13ccd3fe82da35940534c9f0e1b4df1de3679fec7455d4a089c22b8cec4b8c51&=" alt="Folk cat">
+            <img src="https://media.discordapp.net/attachments/1120107041579606058/1558752033467670538/duke-dennis-feels-the-aura.gif?ex=6acc9474&is=6acb42f4&hm=33ae02b3af8247d7fe7c5a53296e87afb4cda4367d28fa8aabfeb5a97ebb0933&=" alt="Folk cat">
+            <img src="https://media.discordapp.net/attachments/1120107041579606058/1558752342721957908/manly-roblox.gif?ex=6acc94be&is=6acb433e&hm=5de1a76cff65729d47feba60d091d6108bf54297384a5ea13af0919ed99183b0&=" alt="Folk cat">
+            <img src="https://media.discordapp.net/attachments/1120107041579606058/1558752488285413467/image.png?ex=6acc94e1&is=6acb4361&hm=0b448d1989be5e394d458bfab436e09b1c66c81460e21d888edf4ccc4ab7ff3f&=&format=webp&quality=lossless" alt="Folk cat">
+        </div>
+    </div>
+    <hr>
+    <form id="comment-form">
+        <h2>Leave a Comment!</h2>
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Your Name"><br>
+        <label for="comment">Comment</label>
+        <textarea id="comment" placeholder="Your Comment"
+        rows="10" cols="50" style="     resize: none"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</div>>
+<script>
+    const form = document.getElementById('comment-form');
+    const commentContainer = document.getElementById('comment-container');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const usernameVal = document.getElementById('username').value;
+        const commentVal = document.getElementById('comment').value;
+        const formData = {
+            username: usernameVal,
+            comment: commentVal,
+        }
+
+        fetch('/api/comment/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    loadComments();
+                    alert('Comment posted successfully!');
+                } else {
+                    alert('Something went wrong on the server.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Network error, please try again.');
+            });
+    });
+
+    async function loadComments() {
+        try {
+            const response = await fetch('/api/comment/getlast');
+            if (!response.ok){
+                throw new Error('Network response was not ok');
+            }
+            const comments = await response.json();
+
+            commentContainer.innerHTML = '';
+
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment-item';
+                commentElement.innerHTML=
+                    `<p>${escapeHTML(comment.username)}: ${comment.publicationDateTime.toString().substring(0,10)}</p>` +
+                    `<p>${escapeHTML(comment.comment)}</p>`;
+                commentContainer.appendChild(commentElement);
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g,
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+    }
+
+    document.addEventListener('DOMContentLoaded', loadComments);
+
+
+</script>
+</body>
+</html>
