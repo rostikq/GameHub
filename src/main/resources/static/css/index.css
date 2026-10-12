@@ -1,0 +1,77 @@
+h1 {
+    font-size: 4rem;
+}
+
+body {
+    background-color: dimgray;
+    color: white;
+    font-family: Corbel, sans-serif;
+    text-align: center;
+}
+
+.wanted-box{
+    background-color: rgba(0 0 0 / 0.5);
+    text-align: center;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    width: 70%;
+    margin: auto;
+}
+
+#comment-container{
+    background-color: rgba(0 0 0 / 0.3);
+    text-align: left;
+    height: 100%;
+}
+
+.comment-item{
+    text-align: left;
+    border-radius: 1rem;
+    background-color: rgba(0 0 0 / 0.1);
+    margin-top: auto;
+    padding: 0.1rem;
+}
+
+
+.page-container{
+    display: flex;
+    height: 100vh;
+}
+
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    z-index: 100;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 40px;
+}
+
+.wanted-box h2{
+    font-size: 4rem;
+}
+
+.photo-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    margin: auto;
+
+    gap: 16px;
+
+    justify-items: center;
+    align-items: center;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: fill;
+    border-radius: 8px;
+}
