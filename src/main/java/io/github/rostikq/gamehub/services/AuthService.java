@@ -38,6 +38,7 @@ public class AuthService {
         user.setUsername(params.username());
         user.setPassword(_passwordEncoder.encode(params.password()));
         user.setRegistrationDate(LocalDateTime.now());
+        user.setRole(Role.USER);
 
         _repository.save(user);
     }
