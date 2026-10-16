@@ -40,8 +40,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/games/getall").permitAll()
-
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/games/admin/**").hasRole("ADMIN")
 
                         .anyRequest()
                         .authenticated()

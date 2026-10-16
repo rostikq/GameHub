@@ -2,6 +2,7 @@ package io.github.rostikq.gamehub.entities;
 
 import io.github.rostikq.gamehub.dto.Role;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +18,7 @@ public class User {
 
     String password;
 
+    @Column(name = "registration_date")
     LocalDateTime registrationDate;
 
     Role role;
