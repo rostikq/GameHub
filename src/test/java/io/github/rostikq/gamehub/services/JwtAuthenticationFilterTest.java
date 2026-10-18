@@ -1,6 +1,6 @@
 package io.github.rostikq.gamehub.services;
 
-import io.github.rostikq.gamehub.auth.JwtAuthentificationFilter;
+import io.github.rostikq.gamehub.auth.JwtAuthenticationFilter;
 import io.jsonwebtoken.JwtException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,31 +16,31 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @ExtendWith(MockitoExtension.class)
-public class JwtAuthentificationFilterTest {
+public class JwtAuthenticationFilterTest {
     @Mock
     private JwtService jwtService;
 
-    String authentificationToken = "authentification-token";
+    String authenticationToken = "authentication-token";
 
     private MockHttpServletRequest httpServletRequest;
     private MockHttpServletResponse httpServletResponse;
     private MockFilterChain httpFilterChain;
 
     @InjectMocks
-    private JwtAuthentificationFilter filter;
+    private JwtAuthenticationFilter filter;
 
     @BeforeEach
     void setupBeforeEach(){
         httpServletRequest = new MockHttpServletRequest();
-        httpServletRequest.addHeader("Authorization", "Bearer " + authentificationToken);
+        httpServletRequest.addHeader("Authorization", "Bearer " + authenticationToken);
         httpServletResponse = new MockHttpServletResponse();
         httpFilterChain = new MockFilterChain();
     }
 
     @Test
     void doFilterSuccess(){
-        Mockito.when(jwtService.extractName(authentificationToken)).thenReturn("Bob123");
-        Mockito.when(jwtService.extractRole(authentificationToken)).thenReturn("USER");
+        Mockito.when(jwtService.extractName(authenticationToken)).thenReturn("Bob123");
+        Mockito.when(jwtService.extractRole(authenticationToken)).thenReturn("USER");
 
         Assertions.assertDoesNotThrow(() -> {
             filter.doFilter(httpServletRequest, httpServletResponse, httpFilterChain);

@@ -21,7 +21,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http, JwtAuthentificationFilter jwtAuthentificationFilter
+            HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter
     ) throws Exception {
 
         http
@@ -51,7 +51,7 @@ public class SecurityConfig {
                                 SessionCreationPolicy.STATELESS
                         )
                 )
-                .addFilterBefore(jwtAuthentificationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
