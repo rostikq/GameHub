@@ -26,7 +26,8 @@ public class AuthService {
     }
 
     public void register(RegisterParams params) throws IncorrectArgs {
-        if (params == null) throw new IncorrectArgs("Wrong registration params!");
+        if (params == null ||
+        params.username().isBlank() || params.password().isBlank()) throw new IncorrectArgs("Wrong registration params!");
 
 
         if (_repository.existsByUsername(params.username())){
