@@ -1,0 +1,5 @@
+ALTER TABLE users
+ALTER COLUMN role TYPE varchar(32);
+
+ALTER TABLE users
+ALTER COLUMN role SET DEFAULT 'USER';

@@ -21,6 +21,7 @@ public class User {
     @Column(name = "registration_date")
     LocalDateTime registrationDate;
 
+    @Enumerated(EnumType.STRING)
     Role role;
 
     public long getId() {
