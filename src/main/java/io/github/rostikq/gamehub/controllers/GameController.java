@@ -3,6 +3,8 @@ package io.github.rostikq.gamehub.controllers;
 import io.github.rostikq.gamehub.dto.GameDto;
 import io.github.rostikq.gamehub.entities.Game;
 import io.github.rostikq.gamehub.services.GameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -13,17 +15,18 @@ import java.util.List;
 public class GameController {
 
     public final GameService _service;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public GameController(GameService service){
-
         _service = service;
     }
 
     @PostMapping("/admin/add")
     public String addGame(@RequestBody GameDto request){
+        logger.info("Received adding game request:\n{}", request);
         _service.add(request);
-        String message = "Game " + request.name() + " has added at" + LocalDateTime.now();
-        System.out.println(message);
+        String message = "Game " + request.name() + " has added at " + LocalDateTime.now();
+        logger.info(message);
         return message;
     }
 
@@ -31,7 +34,7 @@ public class GameController {
     public String removeGame(@PathVariable("id") Long id){
         _service.remove(id);
         String message = "Attempted to remove " + id + " game";
-        System.out.println(message);
+        logger.info(message);
         return message;
     }
 
@@ -39,7 +42,7 @@ public class GameController {
     public GameDto getGame(@PathVariable("id") Long id){
 
         String message = "Attempted to get " + id + " game";
-        System.out.println(message);
+        logger.info(message);
 
         return _service.get(id);
     }
