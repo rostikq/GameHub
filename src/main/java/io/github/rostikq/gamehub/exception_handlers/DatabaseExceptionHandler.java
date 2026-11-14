@@ -20,7 +20,7 @@ public class DatabaseExceptionHandler {
 
     @ExceptionHandler({DataAccessException.class, PersistenceException.class})
     public ResponseEntity<String> handleQueryTimeoutException(Exception e) {
-        logger.warn(e.getMessage());
+        logger.error(e.getMessage());
         Map<String, Object> errorBody = Map.of(
                 "timestamp", LocalDateTime.now(),
                 "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
