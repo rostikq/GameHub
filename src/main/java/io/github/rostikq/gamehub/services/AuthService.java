@@ -8,6 +8,8 @@ import io.github.rostikq.gamehub.exceptions.UsernameExistsException;
 import io.github.rostikq.gamehub.dto.Role;
 import io.github.rostikq.gamehub.entities.User;
 import io.github.rostikq.gamehub.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class AuthService {
     private final UserRepository _repository;
     private final PasswordEncoder _passwordEncoder;
     private final JwtService _jwtService;
+    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     public AuthService(UserRepository repository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         _repository = repository;
@@ -53,7 +56,7 @@ public class AuthService {
         }
 
         if (user.getRole() == null){
-            System.out.print("WARNING: " + params.username() + " does not have role. Assuming them to be USER.");
+            logger.warn("{} does not have role. Assuming them to be USER.", params.username());
             user.setRole(Role.USER);
         }
 
