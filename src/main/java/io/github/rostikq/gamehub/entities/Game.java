@@ -2,6 +2,8 @@ package io.github.rostikq.gamehub.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "games")
 public class Game {
@@ -21,13 +23,25 @@ public class Game {
     @Column(name = "publication_year")
     private int publicationYear;
 
-    public Game(
+    @OneToMany(mappedBy = "game")
+    private List<Review> reviews;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Game(long id,
             String name,
             String genre,
             String description,
             String imageUrl,
             int publicationYear
     ){
+        this.id = id;
         this.name = name;
         this.genre = genre;
         this.description = description;
@@ -35,7 +49,7 @@ public class Game {
         this.publicationYear = publicationYear;
     }
 
-    Game(){
+    public Game(){
     }
 
 
