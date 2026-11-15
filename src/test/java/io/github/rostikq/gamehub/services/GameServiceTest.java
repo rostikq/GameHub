@@ -36,7 +36,7 @@ public class GameServiceTest {
 
     @Test
     void addIncorrectArgsExceptionTest(){
-        GameDto request = new GameDto("", "", 2000, "", "");
+        GameDto request = new GameDto(0,"", "", 2000, "", "");
         Assertions.assertThrows(IncorrectArgs.class, () -> {
             service.add(request);
         });

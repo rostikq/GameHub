@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class GameMapper {
     public GameDto entityToDto(@NonNull Game game){
         return new GameDto(
+                game.getId(),
                 game.getName(),
                 game.getDescription(),
                 game.getPublicationYear(),
@@ -18,6 +19,7 @@ public class GameMapper {
 
     public Game dtoToEntity(@NonNull GameDto dto){
         return new Game(
+                dto.id(),
                 dto.name(),
                 dto.genre(),
                 dto.description(),
