@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/games/getall").permitAll()
                         .requestMatchers("/api/games/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/reviews/game/{id}/recent").permitAll()
+                        .requestMatchers("/api/reviews/user/{id}/all").permitAll()
 
                         .anyRequest()
                         .authenticated()

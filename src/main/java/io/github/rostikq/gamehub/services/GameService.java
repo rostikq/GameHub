@@ -43,6 +43,10 @@ public class GameService
         return mapper.entityToDto(game);
     }
 
+    public boolean exists(Long id){
+        return repository.existsById(id);
+    }
+
     public List<GameDto> getAll(){
         return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
